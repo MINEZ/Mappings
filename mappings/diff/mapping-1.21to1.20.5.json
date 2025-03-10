@@ -1,13 +1,13 @@
 {
   "items": {
-    "music_disc_creator": "music_disc_far",
-    "music_disc_creator_music_box": "music_disc_blocks",
-    "music_disc_precipice": "music_disc_ward"
+    "music_disc_creator": "echo_shard",
+    "music_disc_creator_music_box": "gunpowder",
+    "music_disc_precipice": "gunpowder"
   },
   "itemnames": {
-    "music_disc_creator": "1.21 Music Disc Creator",
-    "music_disc_creator_music_box": "1.21 Music Disc Creator (Music Box)",
-    "music_disc_precipice": "1.21 Music Disc Precipice"
+    "music_disc_creator": "§b音乐唱片",
+    "music_disc_creator_music_box": "§a音乐唱片",
+    "music_disc_precipice": "§a音乐唱片"
   },
   "sounds": {
     "block.trial_spawner.ominous_activate": "block.trial_spawner.charge_activate",
