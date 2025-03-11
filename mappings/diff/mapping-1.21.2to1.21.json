@@ -232,7 +232,7 @@
     "pale_oak_fence_gate": "birch_fence_gate[",
     "pale_oak_fence": "birch_fence[",
     "pale_oak_door": "birch_door[",
-    "pale_moss_block": "moss_block",
+    "pale_moss_block": "note_block[instrument=wither_skeleton,note=19,powered=true]",
     "pale_moss_carpet[bottom=true,east=none,north=none,south=none,west=none]": "moss_carpet",
     "pale_moss_carpet[bottom=true,east=none,north=none,south=none,west=low]": "moss_carpet",
     "pale_moss_carpet[bottom=true,east=none,north=none,south=none,west=tall]": "moss_carpet",

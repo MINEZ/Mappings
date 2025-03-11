@@ -13,12 +13,12 @@
     "creaking_heart[active=false,axis=z,natural=true]": "creaking_heart[axis=z,creaking=dormant]",
     "creaking_heart[active=false,axis=z,natural=false]": "creaking_heart[axis=z,creaking=disabled]",
     "resin_clump": "glow_lichen[",
-    "resin_block": "note_block[instrument=wither_skeleton,note=19,powered=true]",
-    "resin_bricks": "note_block[instrument=wither_skeleton,note=18,powered=false]",
+    "resin_block": "note_block[instrument=wither_skeleton,note=18,powered=false]",
+    "resin_bricks": "note_block[instrument=wither_skeleton,note=18,powered=true]",
     "resin_brick_stairs": "brick_stairs[",
     "resin_brick_slab": "brick_slab[",
     "resin_brick_wall": "brick_wall[",
-    "chiseled_resin_bricks": "note_block[instrument=wither_skeleton,note=18,powered=true]",
+    "chiseled_resin_bricks": "note_block[instrument=wither_skeleton,note=17,powered=false]",
     "open_eyeblossom": "tripwire[attached=false,disarmed=false,east=false,north=false,powered=false,south=true,west=true]",
     "closed_eyeblossom": "tripwire[attached=false,disarmed=false,east=false,north=false,powered=true,south=true,west=false]",
     "potted_open_eyeblossom": "potted_torchflower",
@@ -34,7 +34,7 @@
     "resin_brick_slab": "paper",
     "resin_brick_wall": "paper",
     "chiseled_resin_bricks": "paper",
-    "resin_brick": "paper"
+    "resin_brick": "gunpowder"
   },
   "itemnames": {
     "open_eyeblossom": "张开的眼眸花",
