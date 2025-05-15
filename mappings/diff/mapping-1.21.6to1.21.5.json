@@ -1,0 +1,88 @@
+{
+  "blockstates": {
+    "dried_ghast": "chorus_plant[down=true,east=false,north=false,south=false,up=false,west=false]"
+  },
+  "items": {
+    "dried_ghast": "skeleton_skull",
+    "white_harness": "wolf_armor",
+    "orange_harness": "wolf_armor",
+    "magenta_harness": "wolf_armor",
+    "light_blue_harness": "wolf_armor",
+    "yellow_harness": "wolf_armor",
+    "lime_harness": "wolf_armor",
+    "pink_harness": "wolf_armor",
+    "gray_harness": "wolf_armor",
+    "light_gray_harness": "wolf_armor",
+    "cyan_harness": "wolf_armor",
+    "purple_harness": "wolf_armor",
+    "blue_harness": "wolf_armor",
+    "brown_harness": "wolf_armor",
+    "green_harness": "wolf_armor",
+    "red_harness": "wolf_armor",
+    "black_harness": "wolf_armor",
+    "happy_ghast_spawn_egg": "ghast_spawn_egg",
+    "music_disc_tears": "music_disc_precipice"
+  },
+  "itemnames": {
+    "dried_ghast": "1.22 Dried Ghast",
+    "white_harness": "1.22 White Harness",
+    "orange_harness": "1.22 Orange Harness",
+    "magenta_harness": "1.22 Magenta Harness",
+    "light_blue_harness": "1.22 Light Blue Harness",
+    "yellow_harness": "1.22 Yellow Harness",
+    "lime_harness": "1.22 Lime Harness",
+    "pink_harness": "1.22 Pink Harness",
+    "gray_harness": "1.22 Gray Harness",
+    "light_gray_harness": "1.22 Light Gray Harness",
+    "cyan_harness": "1.22 Cyan Harness",
+    "purple_harness": "1.22 Purple Harness",
+    "blue_harness": "1.22 Blue Harness",
+    "brown_harness": "1.22 Brown Harness",
+    "green_harness": "1.22 Green Harness",
+    "red_harness": "1.22 Red Harness",
+    "black_harness": "1.22 Black Harness",
+    "happy_ghast_spawn_egg": "1.22 Happy Ghast Spawn Egg",
+    "music_disc_tears": "1.22 Music Disc (Tears)"
+  },
+  "sounds": {
+    "block.dried_ghast.break": "",
+    "block.dried_ghast.step": "",
+    "block.dried_ghast.fall": "",
+    "block.dried_ghast.hit": "",
+    "block.dried_ghast.ambient": "",
+    "block.dried_ghast.ambient_water": "",
+    "block.dried_ghast.place": "",
+    "block.dried_ghast.place_in_water": "",
+    "block.dried_ghast.transition": "",
+    "block.dry_grass.ambient": "",
+    "entity.ghastling.ambient": "",
+    "entity.ghastling.death": "",
+    "entity.ghastling.hurt": "",
+    "entity.ghastling.spawn": "",
+    "entity.happy_ghast.ambient": "",
+    "entity.happy_ghast.death": "",
+    "entity.happy_ghast.hurt": "",
+    "entity.happy_ghast.riding": "",
+    "entity.happy_ghast.equip": "",
+    "entity.happy_ghast.unequip": "",
+    "entity.happy_ghast.harness_goggles_up": "",
+    "entity.happy_ghast.harness_goggles_down": "",
+    "item.shears.snip": "",
+    "music_disc.tears": "music_disc.precipice"
+  },
+  "argumenttypes": {
+    "hex_color": "brigadier:string",
+    "dialog": "brigadier:string"
+  },
+  "entities": {
+    "happy_ghast": "ghast"
+  },
+  "entitynames": {
+    "happy_ghast": "Happy Ghast"
+  },
+  "attributes": {
+    "camera_distance": "",
+    "waypoint_transmit_range": "",
+    "waypoint_receive_range": ""
+  }
+}
