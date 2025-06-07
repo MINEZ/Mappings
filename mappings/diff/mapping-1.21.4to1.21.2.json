@@ -27,14 +27,14 @@
   "items": {
     "open_eyeblossom": "paper",
     "closed_eyeblossom": "paper",
-    "resin_clump": "gunpowder",
-    "resin_block": "gunpowder",
+    "resin_clump": "nether_brick",
+    "resin_block": "nether_brick",
     "resin_bricks": "paper",
     "resin_brick_stairs": "paper",
     "resin_brick_slab": "paper",
     "resin_brick_wall": "paper",
     "chiseled_resin_bricks": "paper",
-    "resin_brick": "gunpowder"
+    "resin_brick": "nether_brick"
   },
   "itemnames": {
     "open_eyeblossom": "张开的眼眸花",

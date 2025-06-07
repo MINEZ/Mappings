@@ -1,8 +1,8 @@
 {
   "items": {
     "music_disc_creator": "echo_shard",
-    "music_disc_creator_music_box": "gunpowder",
-    "music_disc_precipice": "gunpowder"
+    "music_disc_creator_music_box": "nether_brick",
+    "music_disc_precipice": "nether_brick"
   },
   "itemnames": {
     "music_disc_creator": "§b音乐唱片",
