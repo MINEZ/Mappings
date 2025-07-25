@@ -1,9 +1,9 @@
 {
   "items": {
-    "music_disc_lava_chicken": "music_disc_pigstep"
+    "music_disc_lava_chicken": "echo_shard"
   },
   "itemnames": {
-    "music_disc_lava_chicken": "1.21.7 Music Disc Lava Chicken"
+    "music_disc_lava_chicken": "§b音乐唱片"
   },
   "sounds": {
     "music_disc.lava_chicken": "music_disc.pigstep"
