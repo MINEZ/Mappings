@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    id("com.gradleup.shadow") version "8.3.6"
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 repositories {
@@ -9,20 +9,20 @@ repositories {
 }
 
 dependencies {
-    api("com.google.code.gson:gson:2.13.1")
-    api("com.viaversion:nbt:5.1.1")
-    api("it.unimi.dsi:fastutil:8.5.15")
-    api("ch.qos.logback:logback-classic:1.5.16")
+    api("com.google.code.gson:gson:2.13.2")
+    api("com.viaversion:nbt:5.1.2")
+    api("it.unimi.dsi:fastutil:8.5.16")
+    api("ch.qos.logback:logback-classic:1.5.19")
     compileOnly("org.jetbrains:annotations:26.0.2")
     // Uncomment to manually run mappings gen in ide
     // compileOnly(files("server.jar"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 group = "com.viaversion"
-version = "4.1.0"
+version = "4.2.0"
 description = "MappingsGenerator"
 java.sourceCompatibility = JavaVersion.VERSION_21
 
@@ -42,6 +42,7 @@ tasks {
 
 
     shadowJar {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         archiveClassifier.set("")
         archiveFileName.set("MappingsGenerator-${project.version}.jar")
 

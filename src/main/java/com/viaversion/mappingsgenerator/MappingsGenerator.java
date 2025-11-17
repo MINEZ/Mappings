@@ -152,6 +152,7 @@ public final class MappingsGenerator {
         final JsonObject registries = GSON.fromJson(registriesContent, JsonObject.class);
         addArray(viaMappings, registries, "minecraft:item", "items");
         addArray(viaMappings, registries, "minecraft:sound_event", "sounds");
+        addArray(viaMappings, registries, "minecraft:custom_stat", "statistics");
         addArray(viaMappings, registries, "minecraft:particle_type", "particles");
         addArray(viaMappings, registries, "minecraft:block_entity_type", "blockentities");
         addArray(viaMappings, registries, "minecraft:command_argument_type", "argumenttypes");

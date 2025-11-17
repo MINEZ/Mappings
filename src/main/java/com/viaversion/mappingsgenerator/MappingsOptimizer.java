@@ -30,6 +30,10 @@ import com.viaversion.nbt.tag.CompoundTag;
 import com.viaversion.nbt.tag.IntArrayTag;
 import com.viaversion.nbt.tag.Tag;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.io.BufferedReader;
@@ -66,25 +70,25 @@ public final class MappingsOptimizer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MappingsOptimizer.class.getSimpleName());
     private static final TagWriter TAG_WRITER = NBTIO.writer().named();
     private static final Set<String> STANDARD_FIELDS = Set.of(
-            "blockstates",
-            "blocks",
-            "items",
-            "menus",
-            "sounds",
-            "blockentities",
-            "enchantments",
-            "paintings",
-            "entities",
-            "particles",
-            "argumenttypes",
-            "statistics",
-            "tags",
-            "attributes"
+        "blockstates",
+        "blocks",
+        "items",
+        "menus",
+        "sounds",
+        "blockentities",
+        "enchantments",
+        "paintings",
+        "entities",
+        "particles",
+        "argumenttypes",
+        "statistics",
+        "tags",
+        "attributes"
     );
     private static final int[] storageStrategyCounts = new int[IDENTITY_ID + 1];
     private static final Set<String> savedIdentifierFiles = new HashSet<>();
-    private static JsonObject globalIdentifiersObject;
-    private static JsonObject fileHashesObject;
+    static JsonObject globalIdentifiersObject;
+    static JsonObject fileHashesObject;
 
     private final Set<String> ignoreMissing = new HashSet<>(Arrays.asList("blocks", "statistics"));
     private final CompoundTag output = new CompoundTag();
@@ -123,7 +127,7 @@ public final class MappingsOptimizer {
         optimizer.optimizeAndWrite();
     }
 
-    private void loadGlobalFiles() throws IOException {
+    static void loadGlobalFiles() throws IOException {
         // Load and reuse identifiers file, being a global table across all versions
         if (globalIdentifiersObject == null) {
             globalIdentifiersObject = MappingsLoader.load(MAPPINGS_DIR, "identifier-table.json");
@@ -151,8 +155,8 @@ public final class MappingsOptimizer {
     /**
      * Creates a new MappingsOptimizer instance.
      *
-     * @param from    version to map from
-     * @param to      version to map to
+     * @param from        version to map from
+     * @param to          version to map to
      * @param specialFrom If true, the special folders will be used for input
      * @param specialTo   If true, the special folders will be used for output
      * @see #optimizeAndWrite()
@@ -210,13 +214,12 @@ public final class MappingsOptimizer {
             names("items", "itemnames");
             names("enchantments", "enchantmentnames");
             fullNames("entitynames", "entitynames");
-            if (backwards) {
-                // No need to put sounds into the identifier files, so just use full names
-                fullNames("sounds", "soundnames");
-            }
 
             if (diffObject.has("tags")) {
                 tags();
+            }
+            if (diffObject.has("blockstates")) {
+                changedBlockStateProperties();
             }
         }
 
@@ -282,11 +285,14 @@ public final class MappingsOptimizer {
         final CompoundTag identifiers = new CompoundTag();
         storeIdentifierIndexes(identifiers, object, "entities");
         storeIdentifierIndexes(identifiers, object, "items");
+        storeIdentifierIndexes(identifiers, object, "sounds");
+        storeIdentifierIndexes(identifiers, object, "blocks");
         storeIdentifierIndexes(identifiers, object, "particles");
         storeIdentifierIndexes(identifiers, object, "argumenttypes");
         storeIdentifierIndexes(identifiers, object, "attributes");
         storeIdentifierIndexes(identifiers, object, "recipe_serializers");
         storeIdentifierIndexes(identifiers, object, "data_component_type");
+        storeIdentifierIndexes(identifiers, object, "blockentities");
 
         // No need to save the same identifiers multiple times if one version appears in multiple runs
         if (savedIdentifierFiles.add(version) && !identifiers.isEmpty()) {
@@ -308,6 +314,7 @@ public final class MappingsOptimizer {
         final Path outputPath = OUTPUT_DIR.resolve(OUTPUT_GLOBAL_IDENTIFIERS_FILE);
         final CompoundTag globalIdentifiersTag = (CompoundTag) JsonConverter.toTag(globalIdentifiersObject);
         write(globalIdentifiersTag, outputPath);
+        addFileData("identifier-table", globalIdentifiersTag.hashCode(), outputPath);
         updatedGlobalIdentifiers = false;
     }
 
@@ -325,7 +332,7 @@ public final class MappingsOptimizer {
         writeJson(fileHashesObject, Path.of("output_hashes.json"));
     }
 
-    private static void writeJson(final JsonObject object, final Path path) throws IOException {
+    static void writeJson(final JsonObject object, final Path path) throws IOException {
         try (final BufferedWriter writer = Files.newBufferedWriter(path)) {
             MappingsGenerator.GSON.toJson(object, writer);
         }
@@ -355,7 +362,7 @@ public final class MappingsOptimizer {
      */
     public void mappings(final boolean alwaysWriteIdentity, final String key) {
         if (!unmappedObject.has(key) || !mappedObject.has(key)
-                || !unmappedObject.get(key).isJsonArray() || !mappedObject.get(key).isJsonArray()) {
+            || !unmappedObject.get(key).isJsonArray() || !mappedObject.get(key).isJsonArray()) {
             return;
         }
 
@@ -382,17 +389,17 @@ public final class MappingsOptimizer {
     }
 
     public void cursedMappings(
-            final String unmappedKey,
-            final String mappedKey,
-            final String outputKey,
-            final int size
+        final String unmappedKey,
+        final String mappedKey,
+        final String outputKey,
+        final int size
     ) {
         final JsonObject mappedIdentifiers = JsonConverter.toJsonObject(mappedObject.get(mappedKey));
         final Int2IntMap map = MappingsLoader.map(
-                JsonConverter.toJsonObject(unmappedObject.get(unmappedKey)),
-                mappedIdentifiers,
-                diffObject != null ? diffObject.getAsJsonObject(unmappedKey) : null,
-                errorStrategy
+            JsonConverter.toJsonObject(unmappedObject.get(unmappedKey)),
+            mappedIdentifiers,
+            diffObject != null ? diffObject.getAsJsonObject(unmappedKey) : null,
+            errorStrategy
         );
 
         final CompoundTag changedTag = new CompoundTag();
@@ -458,9 +465,42 @@ public final class MappingsOptimizer {
     }
 
     /**
+     * Collects changed block states, used for the debug stick.
+     * This checks for any change whether it's the base type or a property, but does not list changed properties,
+     * as that would increase file size by a lot for no real value.
+     */
+    private void changedBlockStateProperties() throws IOException {
+        if (fromVersion.equals("1.13.2") && toVersion.equals("1.13")
+            || fromVersion.equals("1.13") && toVersion.equals("1.13.2")) {
+            return;
+        }
+
+        final IntSet changedProperties = new IntOpenHashSet();
+        for (final Map.Entry<String, JsonElement> entry : diffObject.getAsJsonObject("blockstates").entrySet()) {
+            final String block = entry.getKey().split("\\[", 2)[0];
+            changedProperties.add(idOf("blocks", block, false));
+        }
+
+        if (!changedProperties.isEmpty()) {
+            output.put("changed_blocks", new IntArrayTag(changedProperties.toIntArray()));
+        }
+    }
+
+    private int idOf(final String key, final String value, final boolean mapped) {
+        final JsonArray array = (mapped ? mappedObject : unmappedObject).getAsJsonArray(key);
+        for (int i = 0; i < array.size(); i++) {
+            final JsonElement element = array.get(i);
+            if (element.getAsString().equals(value)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Could not find id for " + key + ": " + value);
+    }
+
+    /**
      * Writes mapped tag ids to the given tag.
      */
-    public void tags() {
+    private void tags() {
         final JsonObject tagsObject = diffObject.getAsJsonObject("tags");
         final CompoundTag tagsTag = new CompoundTag();
         for (final Map.Entry<String, JsonElement> entry : tagsObject.entrySet()) {
@@ -515,9 +555,9 @@ public final class MappingsOptimizer {
      * @param key    to read from and write to
      */
     private void storeIdentifierIndexes(
-            final CompoundTag tag,
-            final JsonObject object,
-            final String key
+        final CompoundTag tag,
+        final JsonObject object,
+        final String key
     ) {
         final JsonElement identifiersElement = object.get(key);
         if (identifiersElement == null) {
@@ -588,7 +628,9 @@ public final class MappingsOptimizer {
 
         final CompoundTag tag = new CompoundTag();
         parent.put(key, tag);
-        tag.putInt("mappedSize", result.mappedSize());
+        if (result.mappedSize() != -1) {
+            tag.putInt("mappedSize", result.mappedSize());
+        }
 
         if (!hasChanges) {
             tag.putByte("id", IDENTITY_ID);
